@@ -12,6 +12,9 @@ function toMinor(amountStr, currency) {
   const negative = str.startsWith('-');
   const unsigned = negative ? str.slice(1) : str;
   const [whole, frac = ''] = unsigned.split('.');
+  if (frac.length > decimals) {
+    throw new Error(`${amountStr} has more precision than ${currency} allows (${decimals}dp)`);
+  }
   const paddedFrac = frac.padEnd(decimals, '0');
   const minor = Number(whole || '0') * 10 ** decimals + Number(paddedFrac || '0');
   return negative ? -minor : minor;
@@ -32,9 +35,8 @@ function divRoundHalfUp(numerator, denominator) {
   const n = Math.abs(numerator);
   const quotient = Math.floor(n / denominator);
   const remainder = n % denominator;
-  if(rounded = remainder * 2 >= denominator) {
-    return (quotient + 1) * sign;
-  }
+  const rounded = remainder * 2 >= denominator ? quotient + 1 : quotient;
+  return sign * rounded;
 }
 
 module.exports = { decimalsFor, toMinor, formatMinor, divRoundHalfUp };
