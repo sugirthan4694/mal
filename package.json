@@ -1,0 +1,8 @@
+{
+  "name": "ledger-core",
+  "version": "1.0.0",
+  "main": "src/engine.js",
+  "scripts": {
+    "start": "node bin/run.js"
+  }
+}

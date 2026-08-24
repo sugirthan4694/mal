@@ -1,0 +1,18 @@
+const DECIMALS = {
+  AED: 2,
+  BHD: 3,
+};
+
+const OVERDRAFT_FEE_MINOR = {
+  AED: 2500,
+};
+
+const DAILY_INTEREST_BPS_NUM = 4;
+const DAILY_INTEREST_BPS_DEN = 10000;
+
+module.exports = {
+  DECIMALS,
+  OVERDRAFT_FEE_MINOR,
+  DAILY_INTEREST_BPS_NUM,
+  DAILY_INTEREST_BPS_DEN,
+};
