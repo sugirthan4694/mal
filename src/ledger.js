@@ -12,8 +12,8 @@ class Account {
     this.recomputeLog = [];
 
     const opening = toMinor(openingBalance, currency);
-    if (opening > 0) {
-      this.postings.push({ type: 'OPENING', amountMinor: opening, valueDay: 1, bookedDay: 0, ref: 'opening' });
+    if (opening !== 0) {
+      this.postings.push({ type: 'OPENING', amountMinor: opening, valueDay: 0, bookedDay: 0, ref: 'opening' });
     }
   }
 
@@ -30,13 +30,13 @@ class Account {
   activeHoldsTotal() {
     let total = 0;
     for (const hold of this.holds.values()) {
-      if (hold.status !== 'DECLINED') total += hold.amountMinor;
+      if (hold.status === 'ACTIVE') total += hold.amountMinor;
     }
     return total;
   }
 
   availableBalanceAsOf(day) {
-    return this.ledgerBalanceAsOf(day) + this.activeHoldsTotal();
+    return this.ledgerBalanceAsOf(day) - this.activeHoldsTotal();
   }
 
   format(minor) {
